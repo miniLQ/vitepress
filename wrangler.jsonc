@@ -1,0 +1,7 @@
+{
+  "name": "vitepress",
+  "compatibility_date": "2025-04-01",
+  "assets": {
+    "directory": "./.vitepress/dist" // 指向你的构建输出目录
+  }
+}
