@@ -13,6 +13,12 @@
   "license": "ISC",
   "description": "",
   "devDependencies": {
-    "vitepress": "^1.6.4"
+    "medium-zoom": "^1.1.0",
+    "mermaid": "^11.12.2",
+    "vitepress": "^1.6.4",
+    "vitepress-plugin-mermaid": "^2.0.17"
+  },
+  "dependencies": {
+    "markdown-it-custom-attrs": "^1.0.2"
   }
 }

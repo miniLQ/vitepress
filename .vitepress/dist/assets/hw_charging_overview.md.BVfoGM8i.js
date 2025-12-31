@@ -1,0 +1,280 @@
+import{_ as a,c as n,o as i,ae as l}from"./chunks/framework.CDjunVez.js";const p="/assets/001.DKyu4nIw.png",g=JSON.parse('{"title":"华为充电管理系统架构","description":"","frontmatter":{},"headers":[],"relativePath":"hw_charging/overview.md","filePath":"hw_charging/overview.md"}'),t={name:"hw_charging/overview.md"};function e(h,s,k,E,r,c){return i(),n("div",null,[...s[0]||(s[0]=[l(`<h1 id="华为充电管理系统架构" tabindex="-1">华为充电管理系统架构 <a class="header-anchor" href="#华为充电管理系统架构" aria-label="Permalink to &quot;华为充电管理系统架构&quot;">​</a></h1><h2 id="一、概述" tabindex="-1">一、概述 <a class="header-anchor" href="#一、概述" aria-label="Permalink to &quot;一、概述&quot;">​</a></h2><p>本报告分析华为Mate X5（代号&quot;charlotte&quot;）的充电管理系统架构，该系统位于Linux内核的kernel/drivers/hwpower/目录下，是一个高度模块化、基于事件驱动和投票机制的复杂电源管理系统。</p><h2 id="二、整体架构" tabindex="-1">二、整体架构 <a class="header-anchor" href="#二、整体架构" aria-label="Permalink to &quot;二、整体架构&quot;">​</a></h2><h3 id="_2-1-分层架构" tabindex="-1">2.1 分层架构 <a class="header-anchor" href="#_2-1-分层架构" aria-label="Permalink to &quot;2.1 分层架构&quot;">​</a></h3><p>华为充电管理系统采用四层架构设计：</p><div class="language- vp-adaptive-theme"><button title="Copy Code" class="copy"></button><span class="lang"></span><pre class="shiki shiki-themes github-light github-dark vp-code" tabindex="0"><code><span class="line"><span>  ┌─────────────────────────────────────┐</span></span>
+<span class="line"><span>  │        用户空间接口层                │</span></span>
+<span class="line"><span>  │  (sysfs、uevent、power_supply)      │</span></span>
+<span class="line"><span>  ├─────────────────────────────────────┤</span></span>
+<span class="line"><span>  │        业务逻辑管理层                │</span></span>
+<span class="line"><span>  │  (charge_manager、battery_core)     │</span></span>
+<span class="line"><span>  ├─────────────────────────────────────┤</span></span>
+<span class="line"><span>  │        协议与算法层                  │</span></span>
+<span class="line"><span>  │  (protocol、algorithm、vote)        │</span></span>
+<span class="line"><span>  ├─────────────────────────────────────┤</span></span>
+<span class="line"><span>  │        硬件抽象与驱动层              │</span></span>
+<span class="line"><span>  │  (hardware_ic、channel、coul)       │</span></span>
+<span class="line"><span>  └─────────────────────────────────────┘</span></span></code></pre></div><h2 id="_2-2-目录结构" tabindex="-1">2.2 目录结构 <a class="header-anchor" href="#_2-2-目录结构" aria-label="Permalink to &quot;2.2 目录结构&quot;">​</a></h2><div class="language- vp-adaptive-theme"><button title="Copy Code" class="copy"></button><span class="lang"></span><pre class="shiki shiki-themes github-light github-dark vp-code" tabindex="0"><code><span class="line"><span>  hwpower/</span></span>
+<span class="line"><span>  ├── cc_accessory/              # 配件管理（无线光带等）</span></span>
+<span class="line"><span>  ├── cc_adapter/                # 适配器检测与管理</span></span>
+<span class="line"><span>  ├── cc_battery/                # 电池管理核心</span></span>
+<span class="line"><span>  │   ├── battery_core.c         # 电池核心逻辑</span></span>
+<span class="line"><span>  │   ├── battery_1s2p/          # 1串2并电池管理</span></span>
+<span class="line"><span>  │   ├── battery_cccv/          # CC/CV充电控制</span></span>
+<span class="line"><span>  │   ├── battery_charge_balance/# 电荷平衡</span></span>
+<span class="line"><span>  │   ├── battery_fault/         # 电池故障检测</span></span>
+<span class="line"><span>  │   ├── battery_model/         # 电池模型管理</span></span>
+<span class="line"><span>  │   ├── battery_ocv/           # 开路电压管理</span></span>
+<span class="line"><span>  │   ├── battery_soh/           # 电池健康度</span></span>
+<span class="line"><span>  │   ├── battery_temp/          # 温度管理</span></span>
+<span class="line"><span>  │   ├── battery_type_identify/ # 电池类型识别</span></span>
+<span class="line"><span>  │   └── battery_ui_capacity/   # UI电量显示</span></span>
+<span class="line"><span>  ├── cc_charger/                # 充电器管理</span></span>
+<span class="line"><span>  │   ├── charge_manager.c       # 充电管理器</span></span>
+<span class="line"><span>  │   ├── buck_charge/           # Buck充电模式</span></span>
+<span class="line"><span>  │   ├── direct_charge/         # 直充模式（SCP/LVC）</span></span>
+<span class="line"><span>  │   ├── hvdcp_charge/          # HVDCP快充</span></span>
+<span class="line"><span>  │   ├── wireless_charge/       # 无线充电</span></span>
+<span class="line"><span>  │   └── common/                # 公共接口</span></span>
+<span class="line"><span>  ├── cc_common_module/          # 公共模块</span></span>
+<span class="line"><span>  │   ├── power_event/           # 事件管理</span></span>
+<span class="line"><span>  │   ├── power_vote/            # 投票机制</span></span>
+<span class="line"><span>  │   ├── power_algorithm/       # 算法库</span></span>
+<span class="line"><span>  │   ├── power_supply/          # 电源供应接口</span></span>
+<span class="line"><span>  │   └── ...                    # 其他公共模块</span></span>
+<span class="line"><span>  ├── cc_coul/                   # 电量计管理</span></span>
+<span class="line"><span>  ├── cc_hardware_channel/       # 硬件通道</span></span>
+<span class="line"><span>  ├── cc_hardware_ic/            # 硬件IC驱动</span></span>
+<span class="line"><span>  ├── cc_isolation/              # 隔离保护</span></span>
+<span class="line"><span>  └── cc_protocol/               # 充电协议</span></span></code></pre></div><h2 id="三、核心组件分析" tabindex="-1">三、核心组件分析 <a class="header-anchor" href="#三、核心组件分析" aria-label="Permalink to &quot;三、核心组件分析&quot;">​</a></h2><h3 id="_3-1-电池管理核心-cc-battery" tabindex="-1">3.1 电池管理核心 (cc_battery) <a class="header-anchor" href="#_3-1-电池管理核心-cc-battery" aria-label="Permalink to &quot;3.1 电池管理核心 (cc_battery)&quot;">​</a></h3><p>battery_core：电池系统的核心控制器，负责：</p><ul><li>电池状态监控（存在性、充电状态、健康度）</li><li>温度补偿与NTC校准</li><li>容量等级管理</li><li>多电池系统支持（主/辅电池） 关键子模块：</li><li>battery_1s2p：1串2并电池拓扑管理</li><li>battery_cccv：恒流恒压充电算法</li><li>battery_charge_balance：串并联电池电荷平衡</li><li>battery_model：电池模型与参数管理</li><li>battery_soh：电池健康度计算与预测</li></ul><h3 id="_3-2-充电器管理-cc-charger" tabindex="-1">3.2 充电器管理 (cc_charger) <a class="header-anchor" href="#_3-2-充电器管理-cc-charger" aria-label="Permalink to &quot;3.2 充电器管理 (cc_charger)&quot;">​</a></h3><p>charge_manager：充电系统的总调度器，负责：</p><ul><li>充电模式选择（Buck、直充、无线）</li><li>充电状态机管理</li><li>协议协商与适配器识别</li><li>故障处理与安全保护 充电模式：</li><li>Buck Charge：传统降压充电，支持普通充电器</li><li>Direct Charge：直充模式，支持SCP/LVC快充</li><li>HVDCP：高电压快充协议</li><li>Wireless Charge：无线充电管理</li></ul><h3 id="_3-3-公共模块-cc-common-module" tabindex="-1">3.3 公共模块 (cc_common_module) <a class="header-anchor" href="#_3-3-公共模块-cc-common-module" aria-label="Permalink to &quot;3.3 公共模块 (cc_common_module)&quot;">​</a></h3><p>power_event：事件驱动框架，定义了大量电源相关事件：</p><ul><li>连接/断开事件（USB、无线、OTG）</li><li>充电状态事件（开始、停止、完成、故障）</li><li>温度与保护事件</li><li>协议协商事件 power_vote：投票决策机制，用于多客户端参数协商：</li><li>FCC（满充容量）投票</li><li>ICL（输入电流限制）投票</li><li>电压与温度阈值投票</li></ul><h2 id="四、通信机制" tabindex="-1">四、通信机制 <a class="header-anchor" href="#四、通信机制" aria-label="Permalink to &quot;四、通信机制&quot;">​</a></h2><h3 id="_4-1-事件通知机制" tabindex="-1">4.1 事件通知机制 <a class="header-anchor" href="#_4-1-事件通知机制" aria-label="Permalink to &quot;4.1 事件通知机制&quot;">​</a></h3><p>系统采用Linux内核的notifier机制实现组件间通信：</p><div class="language-c vp-adaptive-theme"><button title="Copy Code" class="copy"></button><span class="lang">c</span><pre class="shiki shiki-themes github-light github-dark vp-code" tabindex="0"><code><span class="line"><span style="--shiki-light:#6A737D;--shiki-dark:#6A737D;">  // 事件类型定义（超过200种事件）</span></span>
+<span class="line"><span style="--shiki-light:#D73A49;--shiki-dark:#F97583;">  enum</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8;"> power_event_ne_type {</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8;">    POWER_NE_USB_CONNECT,</span><span style="--shiki-light:#6A737D;--shiki-dark:#6A737D;">          // USB连接</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8;">    POWER_NE_USB_DISCONNECT,</span><span style="--shiki-light:#6A737D;--shiki-dark:#6A737D;">       // USB断开</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8;">    POWER_NE_CHARGING_START,</span><span style="--shiki-light:#6A737D;--shiki-dark:#6A737D;">       // 充电开始</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8;">    POWER_NE_CHARGING_STOP,</span><span style="--shiki-light:#6A737D;--shiki-dark:#6A737D;">        // 充电停止</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8;">    POWER_NE_DC_LVC_CHARGING,</span><span style="--shiki-light:#6A737D;--shiki-dark:#6A737D;">      // LVC直充</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8;">    POWER_NE_DC_SC_CHARGING,</span><span style="--shiki-light:#6A737D;--shiki-dark:#6A737D;">       // SC直充</span></span>
+<span class="line"><span style="--shiki-light:#6A737D;--shiki-dark:#6A737D;">    // ... 其他事件</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8;">  };</span></span>
+<span class="line"></span>
+<span class="line"><span style="--shiki-light:#6A737D;--shiki-dark:#6A737D;">  // 事件通知接口</span></span>
+<span class="line"><span style="--shiki-light:#D73A49;--shiki-dark:#F97583;">  int</span><span style="--shiki-light:#6F42C1;--shiki-dark:#B392F0;"> power_event_bnc_notify</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8;">(</span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583;">unsigned</span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583;"> int</span><span style="--shiki-light:#E36209;--shiki-dark:#FFAB70;"> bnt_type</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8;">,</span></span>
+<span class="line"><span style="--shiki-light:#D73A49;--shiki-dark:#F97583;">                          unsigned</span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583;"> int</span><span style="--shiki-light:#E36209;--shiki-dark:#FFAB70;"> event_type</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8;">,</span></span>
+<span class="line"><span style="--shiki-light:#D73A49;--shiki-dark:#F97583;">                          void</span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583;"> *</span><span style="--shiki-light:#E36209;--shiki-dark:#FFAB70;">data</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8;">);</span></span></code></pre></div><h3 id="_4-2-投票决策机制" tabindex="-1">4.2 投票决策机制 <a class="header-anchor" href="#_4-2-投票决策机制" aria-label="Permalink to &quot;4.2 投票决策机制&quot;">​</a></h3><p>系统采用客户端投票机制进行参数决策：</p><div class="language-c vp-adaptive-theme"><button title="Copy Code" class="copy"></button><span class="lang">c</span><pre class="shiki shiki-themes github-light github-dark vp-code" tabindex="0"><code><span class="line"><span style="--shiki-light:#6A737D;--shiki-dark:#6A737D;">// 投票客户端定义</span></span>
+<span class="line"><span style="--shiki-light:#D73A49;--shiki-dark:#F97583;">enum</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8;"> vote_client_type {</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8;">  VOTE_CLIENT_THERMAL,</span><span style="--shiki-light:#6A737D;--shiki-dark:#6A737D;">      // 温控客户端</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8;">  VOTE_CLIENT_USER,</span><span style="--shiki-light:#6A737D;--shiki-dark:#6A737D;">         // 用户配置</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8;">  VOTE_CLIENT_JEITA,</span><span style="--shiki-light:#6A737D;--shiki-dark:#6A737D;">        // JEITA温度规范</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8;">  VOTE_CLIENT_BASP,</span><span style="--shiki-light:#6A737D;--shiki-dark:#6A737D;">         // 电池保护</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8;">  VOTE_CLIENT_DC,</span><span style="--shiki-light:#6A737D;--shiki-dark:#6A737D;">          // 直充模块</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8;">  VOTE_CLIENT_CABLE,</span><span style="--shiki-light:#6A737D;--shiki-dark:#6A737D;">        // 线缆检测</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8;">  VOTE_CLIENT_ADAPTER,</span><span style="--shiki-light:#6A737D;--shiki-dark:#6A737D;">      // 适配器能力</span></span>
+<span class="line"><span style="--shiki-light:#6A737D;--shiki-dark:#6A737D;">  // ... 其他客户端</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8;">};</span></span>
+<span class="line"></span>
+<span class="line"><span style="--shiki-light:#6A737D;--shiki-dark:#6A737D;">// 投票表结构</span></span>
+<span class="line"><span style="--shiki-light:#D73A49;--shiki-dark:#F97583;">struct</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8;"> vote_table {</span></span>
+<span class="line"><span style="--shiki-light:#D73A49;--shiki-dark:#F97583;">  int</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8;"> type;</span><span style="--shiki-light:#6A737D;--shiki-dark:#6A737D;">                 // 投票类型</span></span>
+<span class="line"><span style="--shiki-light:#D73A49;--shiki-dark:#F97583;">  const</span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583;"> char</span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583;"> *</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8;">name;</span><span style="--shiki-light:#6A737D;--shiki-dark:#6A737D;">         // 客户端名称</span></span>
+<span class="line"><span style="--shiki-light:#D73A49;--shiki-dark:#F97583;">  int</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8;"> value;</span><span style="--shiki-light:#6A737D;--shiki-dark:#6A737D;">                // 投票值</span></span>
+<span class="line"><span style="--shiki-light:#D73A49;--shiki-dark:#F97583;">  bool</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8;"> enabled;</span><span style="--shiki-light:#6A737D;--shiki-dark:#6A737D;">             // 是否启用</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8;">};</span></span></code></pre></div><h3 id="_4-3-硬件抽象接口" tabindex="-1">4.3 硬件抽象接口 <a class="header-anchor" href="#_4-3-硬件抽象接口" aria-label="Permalink to &quot;4.3 硬件抽象接口&quot;">​</a></h3><p>系统通过操作接口抽象硬件差异：</p><div class="language-c vp-adaptive-theme"><button title="Copy Code" class="copy"></button><span class="lang">c</span><pre class="shiki shiki-themes github-light github-dark vp-code" tabindex="0"><code><span class="line"><span style="--shiki-light:#6A737D;--shiki-dark:#6A737D;">// 电量计接口</span></span>
+<span class="line"><span style="--shiki-light:#D73A49;--shiki-dark:#F97583;">struct</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8;"> coul_interface_ops {</span></span>
+<span class="line"><span style="--shiki-light:#D73A49;--shiki-dark:#F97583;">  int</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8;"> (</span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583;">*</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8;">is_coul_ready)(</span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583;">void</span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583;"> *</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8;">dev_data);</span></span>
+<span class="line"><span style="--shiki-light:#D73A49;--shiki-dark:#F97583;">  int</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8;"> (</span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583;">*</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8;">is_battery_exist)(</span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583;">void</span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583;"> *</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8;">dev_data);</span></span>
+<span class="line"><span style="--shiki-light:#D73A49;--shiki-dark:#F97583;">  int</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8;"> (</span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583;">*</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8;">get_battery_capacity)(</span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583;">void</span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583;"> *</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8;">dev_data);</span></span>
+<span class="line"><span style="--shiki-light:#D73A49;--shiki-dark:#F97583;">  int</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8;"> (</span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583;">*</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8;">get_battery_temperature)(</span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583;">void</span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583;"> *</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8;">dev_data);</span></span>
+<span class="line"><span style="--shiki-light:#D73A49;--shiki-dark:#F97583;">  int</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8;"> (</span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583;">*</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8;">get_battery_voltage)(</span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583;">void</span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583;"> *</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8;">dev_data);</span></span>
+<span class="line"><span style="--shiki-light:#D73A49;--shiki-dark:#F97583;">  int</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8;"> (</span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583;">*</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8;">get_battery_current)(</span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583;">void</span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583;"> *</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8;">dev_data);</span></span>
+<span class="line"><span style="--shiki-light:#6A737D;--shiki-dark:#6A737D;">  // ... 其他操作</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8;">};</span></span>
+<span class="line"></span>
+<span class="line"><span style="--shiki-light:#6A737D;--shiki-dark:#6A737D;">// 充电IC接口</span></span>
+<span class="line"><span style="--shiki-light:#D73A49;--shiki-dark:#F97583;">struct</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8;"> buck_charge_ic_ops {</span></span>
+<span class="line"><span style="--shiki-light:#D73A49;--shiki-dark:#F97583;">  int</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8;"> (</span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583;">*</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8;">set_charge_current)(</span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583;">void</span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583;"> *</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8;">dev_data, </span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583;">int</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8;"> value);</span></span>
+<span class="line"><span style="--shiki-light:#D73A49;--shiki-dark:#F97583;">  int</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8;"> (</span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583;">*</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8;">set_input_current)(</span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583;">void</span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583;"> *</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8;">dev_data, </span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583;">int</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8;"> value);</span></span>
+<span class="line"><span style="--shiki-light:#D73A49;--shiki-dark:#F97583;">  int</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8;"> (</span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583;">*</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8;">set_charge_voltage)(</span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583;">void</span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583;"> *</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8;">dev_data, </span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583;">int</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8;"> value);</span></span>
+<span class="line"><span style="--shiki-light:#D73A49;--shiki-dark:#F97583;">  int</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8;"> (</span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583;">*</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8;">set_terminal_current)(</span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583;">void</span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583;"> *</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8;">dev_data, </span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583;">int</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8;"> value);</span></span>
+<span class="line"><span style="--shiki-light:#6A737D;--shiki-dark:#6A737D;">  // ... 其他操作</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8;">};</span></span></code></pre></div><h2 id="五、组件联系图" tabindex="-1">五、组件联系图 <a class="header-anchor" href="#五、组件联系图" aria-label="Permalink to &quot;五、组件联系图&quot;">​</a></h2><p><img src="`+p+`" alt="" data-fancybox="gallery"></p><div class="language-mermaid vp-adaptive-theme"><button title="Copy Code" class="copy"></button><span class="lang">mermaid</span><pre class="shiki shiki-themes github-light github-dark vp-code" tabindex="0"><code><span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8;">  graph TB</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8;">      %% ==================== 用户空间层 ====================</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8;">      subgraph &quot;用户空间接口层 (User Space Interface)&quot;</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8;">          direction LR</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8;">          Sysfs[&quot;sysfs文件系统&lt;br/&gt;/sys/class/power_supply/&quot;]</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8;">          Uevent[&quot;uevent事件&lt;br/&gt;内核→用户空间通知&quot;]</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8;">          PowerSupply[&quot;power_supply子系统&lt;br/&gt;电池/USB/Wireless&quot;]</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8;">          AndroidHAL[&quot;Android HAL层&lt;br/&gt;BatteryService/Health&quot;]</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8;">      end</span></span>
+<span class="line"></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8;">      %% ==================== 业务逻辑管理层 ====================</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8;">      subgraph &quot;业务逻辑管理层 (Business Logic Layer)&quot;</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8;">          direction TB</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8;">          ChargeManager[&quot;充电管理器&lt;br/&gt;charge_manager.c&quot;]</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8;">          BatteryCore[&quot;电池核心&lt;br/&gt;battery_core.c&quot;]</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8;">          FaultHandler[&quot;故障处理器&lt;br/&gt;battery_fault/&quot;]</span></span>
+<span class="line"></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8;">          %% 充电管理器子模块</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8;">          subgraph &quot;充电模式&quot;</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8;">              BuckCharge[&quot;Buck充电&lt;br/&gt;buck_charge/&quot;]</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8;">              DirectCharge[&quot;直充模式&lt;br/&gt;direct_charge/&quot;]</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8;">              HVDCP[&quot;HVDCP快充&lt;br/&gt;hvdcp_charge/&quot;]</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8;">              WirelessCharge[&quot;无线充电&lt;br/&gt;wireless_charge/&quot;]</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8;">          end</span></span>
+<span class="line"></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8;">          %% 电池核心子模块</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8;">          subgraph &quot;电池管理模块&quot;</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8;">              BatteryTemp[&quot;温度管理&lt;br/&gt;battery_temp/&quot;]</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8;">              BatterySOH[&quot;健康度计算&lt;br/&gt;battery_soh/&quot;]</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8;">              BatteryModel[&quot;电池模型&lt;br/&gt;battery_model/&quot;]</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8;">              ChargeBalance[&quot;电荷平衡&lt;br/&gt;battery_charge_balance/&quot;]</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8;">          end</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8;">      end</span></span>
+<span class="line"></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8;">      %% ==================== 协议与算法层 ====================</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8;">      subgraph &quot;协议与算法层 (Protocol &amp; Algorithm Layer)&quot;</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8;">          direction LR</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8;">          EventSystem[&quot;事件系统&lt;br/&gt;power_event.c&quot;]</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8;">          VoteSystem[&quot;投票系统&lt;br/&gt;power_vote.c&quot;]</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8;">          ProtocolMgr[&quot;协议管理器&lt;br/&gt;adapter_protocol/&quot;]</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8;">          AlgorithmLib[&quot;算法库&lt;br/&gt;power_algorithm/&quot;]</span></span>
+<span class="line"></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8;">          %% 事件系统内部</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8;">          subgraph &quot;事件类型&quot;</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8;">              ConnectEvents[&quot;连接事件&lt;br/&gt;USB/Wireless/OTG&quot;]</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8;">              ChargeEvents[&quot;充电事件&lt;br/&gt;Start/Stop/Done&quot;]</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8;">              FaultEvents[&quot;故障事件&lt;br/&gt;OVP/OCP/OTP&quot;]</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8;">          end</span></span>
+<span class="line"></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8;">          %% 投票系统内部</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8;">          subgraph &quot;投票客户端&quot;</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8;">              ThermalVoter[&quot;温控客户端&lt;br/&gt;VOTE_CLIENT_THERMAL&quot;]</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8;">              UserVoter[&quot;用户配置客户端&lt;br/&gt;VOTE_CLIENT_USER&quot;]</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8;">              JeitaVoter[&quot;JEITA客户端&lt;br/&gt;VOTE_CLIENT_JEITA&quot;]</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8;">              DCVoter[&quot;直充客户端&lt;br/&gt;VOTE_CLIENT_DC&quot;]</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8;">          end</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8;">      end</span></span>
+<span class="line"></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8;">      %% ==================== 硬件抽象与驱动层 ====================</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8;">      subgraph &quot;硬件抽象与驱动层 (Hardware Abstraction Layer)&quot;</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8;">          direction LR</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8;">          CoulDriver[&quot;电量计驱动&lt;br/&gt;coul_interface.c&quot;]</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8;">          ChargeIC[&quot;充电IC驱动&lt;br/&gt;buck_charge_ic.c&quot;]</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8;">          ChannelMgr[&quot;通道管理器&lt;br/&gt;vbus_channel.c&quot;]</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8;">          TempSensor[&quot;温度传感器&lt;br/&gt;multi_btb_temp.c&quot;]</span></span>
+<span class="line"></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8;">          %% 硬件IC驱动</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8;">          subgraph &quot;充电IC家族&quot;</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8;">              BQ2560x[&quot;BQ2560x系列&quot;]</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8;">              BQ25713[&quot;BQ25713系列&quot;]</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8;">              SC8551[&quot;SC8551系列&quot;]</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8;">          end</span></span>
+<span class="line"></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8;">          subgraph &quot;电量计家族&quot;</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8;">              RT9426[&quot;RT9426系列&quot;]</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8;">              MAX1726x[&quot;MAX1726x系列&quot;]</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8;">          end</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8;">      end</span></span>
+<span class="line"></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8;">      %% ==================== 硬件层 ====================</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8;">      subgraph &quot;硬件层 (Hardware Layer)&quot;</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8;">          direction LR</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8;">          Battery[&quot;电池组&lt;br/&gt;电芯/NTC/保护板&quot;]</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8;">          Adapter[&quot;适配器&lt;br/&gt;PD/SCP/FCP/UFCS&quot;]</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8;">          Cable[&quot;充电线缆&lt;br/&gt;Type-C/认证芯片&quot;]</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8;">          WirelessTx[&quot;无线充电发射器&lt;br/&gt;Qi/私有协议&quot;]</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8;">      end</span></span>
+<span class="line"></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8;">      %% ==================== 数据流连接 ====================</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8;">      %% 垂直数据流（从上到下）</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8;">      Sysfs --&gt; ChargeManager</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8;">      Uevent --&gt; EventSystem</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8;">      PowerSupply --&gt; BatteryCore</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8;">      AndroidHAL --&gt; ChargeManager</span></span>
+<span class="line"></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8;">      ChargeManager --&gt; EventSystem</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8;">      ChargeManager --&gt; VoteSystem</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8;">      ChargeManager --&gt; ProtocolMgr</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8;">      BatteryCore --&gt; AlgorithmLib</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8;">      BatteryCore --&gt; FaultHandler</span></span>
+<span class="line"></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8;">      EventSystem --&gt; VoteSystem</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8;">      VoteSystem --&gt; ProtocolMgr</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8;">      ProtocolMgr --&gt; ChargeIC</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8;">      ProtocolMgr --&gt; ChannelMgr</span></span>
+<span class="line"></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8;">      CoulDriver --&gt; BatteryCore</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8;">      ChargeIC --&gt; ChargeManager</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8;">      TempSensor --&gt; BatteryCore</span></span>
+<span class="line"></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8;">      ChargeIC --&gt; Battery</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8;">      ChargeIC --&gt; Adapter</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8;">      ChannelMgr --&gt; Cable</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8;">      ChannelMgr --&gt; WirelessTx</span></span>
+<span class="line"></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8;">      %% 水平连接（同层通信）</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8;">      BuckCharge -- 模式切换 --&gt; DirectCharge</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8;">      DirectCharge -- 模式切换 --&gt; HVDCP</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8;">      HVDCP -- 模式切换 --&gt; WirelessCharge</span></span>
+<span class="line"></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8;">      ThermalVoter -- 投票协商 --&gt; UserVoter</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8;">      UserVoter -- 投票协商 --&gt; JeitaVoter</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8;">      JeitaVoter -- 投票协商 --&gt; DCVoter</span></span>
+<span class="line"></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8;">      ConnectEvents -- 事件分发 --&gt; ChargeEvents</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8;">      ChargeEvents -- 事件分发 --&gt; FaultEvents</span></span>
+<span class="line"></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8;">      BQ2560x -- IC选择 --&gt; BQ25713</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8;">      BQ25713 -- IC选择 --&gt; SC8551</span></span>
+<span class="line"></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8;">      %% 反馈流（从下到上）</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8;">      Battery -. 状态上报 .-&gt; CoulDriver</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8;">      Adapter -. 能力上报 .-&gt; ProtocolMgr</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8;">      Cable -. 电阻检测 .-&gt; ChannelMgr</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8;">      WirelessTx -. 功率上报 .-&gt; ChannelMgr</span></span>
+<span class="line"></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8;">      FaultHandler -. 故障上报 .-&gt; EventSystem</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8;">      EventSystem -. 事件通知 .-&gt; Uevent</span></span>
+<span class="line"></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8;">      %% ==================== 样式定义 ====================</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8;">      classDef userSpace fill:#e1f5fe,stroke:#01579b,stroke-width:2px</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8;">      classDef businessLayer fill:#f3e5f5,stroke:#4a148c,stroke-width:2px</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8;">      classDef protocolLayer fill:#e8f5e8,stroke:#1b5e20,stroke-width:2px</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8;">      classDef driverLayer fill:#fff3e0,stroke:#e65100,stroke-width:2px</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8;">      classDef hardware fill:#f5f5f5,stroke:#616161,stroke-width:2px</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8;">      classDef subgraphStyle fill:#fafafa,stroke:#bdbdbd,stroke-width:1px</span></span>
+<span class="line"></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8;">      class Sysfs,Uevent,PowerSupply,AndroidHAL userSpace</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8;">      class ChargeManager,BatteryCore,FaultHandler businessLayer</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8;">      class EventSystem,VoteSystem,ProtocolMgr,AlgorithmLib protocolLayer</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8;">      class CoulDriver,ChargeIC,ChannelMgr,TempSensor driverLayer</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8;">      class Battery,Adapter,Cable,WirelessTx hardware</span></span>
+<span class="line"></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8;">      %% 子图样式</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8;">      class BuckCharge,DirectCharge,HVDCP,WirelessCharge subgraphStyle</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8;">      class BatteryTemp,BatterySOH,BatteryModel,ChargeBalance subgraphStyle</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8;">      class ConnectEvents,ChargeEvents,FaultEvents subgraphStyle</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8;">      class ThermalVoter,UserVoter,JeitaVoter,DCVoter subgraphStyle</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8;">      class BQ2560x,BQ25713,SC8551 subgraphStyle</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8;">      class RT9426,MAX1726x subgraphStyle</span></span></code></pre></div><h2 id="六、工作流程" tabindex="-1">六、工作流程 <a class="header-anchor" href="#六、工作流程" aria-label="Permalink to &quot;六、工作流程&quot;">​</a></h2><h3 id="_6-1-充电启动流程" tabindex="-1">6.1 充电启动流程 <a class="header-anchor" href="#_6-1-充电启动流程" aria-label="Permalink to &quot;6.1 充电启动流程&quot;">​</a></h3><div class="language- vp-adaptive-theme"><button title="Copy Code" class="copy"></button><span class="lang"></span><pre class="shiki shiki-themes github-light github-dark vp-code" tabindex="0"><code><span class="line"><span>适配器插入检测</span></span>
+<span class="line"><span>↓</span></span>
+<span class="line"><span>协议握手（PD/SCP/FCP/UFCS）</span></span>
+<span class="line"><span>↓</span></span>
+<span class="line"><span>充电模式选择（投票决策）</span></span>
+<span class="line"><span>↓</span></span>
+<span class="line"><span>参数配置（电流/电压/温度）</span></span>
+<span class="line"><span>↓</span></span>
+<span class="line"><span>充电状态监控</span></span>
+<span class="line"><span>↓</span></span>
+<span class="line"><span>故障检测与保护</span></span></code></pre></div><h3 id="_6-2-事件处理流程" tabindex="-1">6.2 事件处理流程 <a class="header-anchor" href="#_6-2-事件处理流程" aria-label="Permalink to &quot;6.2 事件处理流程&quot;">​</a></h3><div class="language- vp-adaptive-theme"><button title="Copy Code" class="copy"></button><span class="lang"></span><pre class="shiki shiki-themes github-light github-dark vp-code" tabindex="0"><code><span class="line"><span>硬件中断触发（连接/断开/故障）</span></span>
+<span class="line"><span>↓</span></span>
+<span class="line"><span>驱动层事件生成</span></span>
+<span class="line"><span>↓</span></span>
+<span class="line"><span>事件系统分发</span></span>
+<span class="line"><span>↓</span></span>
+<span class="line"><span>订阅者处理</span></span>
+<span class="line"><span>↓</span></span>
+<span class="line"><span>状态更新与反馈</span></span></code></pre></div><h3 id="_6-3-投票决策流程" tabindex="-1">6.3 投票决策流程 <a class="header-anchor" href="#_6-3-投票决策流程" aria-label="Permalink to &quot;6.3 投票决策流程&quot;">​</a></h3><div class="language- vp-adaptive-theme"><button title="Copy Code" class="copy"></button><span class="lang"></span><pre class="shiki shiki-themes github-light github-dark vp-code" tabindex="0"><code><span class="line"><span>客户端提出参数需求</span></span>
+<span class="line"><span>↓</span></span>
+<span class="line"><span>投票系统收集所有客户端意见</span></span>
+<span class="line"><span>↓</span></span>
+<span class="line"><span>根据优先级和规则进行决策</span></span>
+<span class="line"><span>↓</span></span>
+<span class="line"><span>应用最终参数到硬件</span></span>
+<span class="line"><span>↓</span></span>
+<span class="line"><span>监控效果并动态调整</span></span></code></pre></div><h2 id="七、关键技术特点" tabindex="-1">七、关键技术特点 <a class="header-anchor" href="#七、关键技术特点" aria-label="Permalink to &quot;七、关键技术特点&quot;">​</a></h2><h3 id="_7-1-模块化设计" tabindex="-1">7.1 模块化设计 <a class="header-anchor" href="#_7-1-模块化设计" aria-label="Permalink to &quot;7.1 模块化设计&quot;">​</a></h3><ul><li>每个功能模块独立，便于维护和扩展</li><li>通过接口抽象硬件差异</li><li>支持热插拔和动态配置</li></ul><h3 id="_7-2-事件驱动架构" tabindex="-1">7.2 事件驱动架构 <a class="header-anchor" href="#_7-2-事件驱动架构" aria-label="Permalink to &quot;7.2 事件驱动架构&quot;">​</a></h3><ul><li>异步事件处理，提高响应速度</li><li>松耦合设计，降低模块间依赖</li><li>支持事件订阅和广播</li></ul><h3 id="_7-3-投票决策机制" tabindex="-1">7.3 投票决策机制 <a class="header-anchor" href="#_7-3-投票决策机制" aria-label="Permalink to &quot;7.3 投票决策机制&quot;">​</a></h3><ul><li>多客户端参数协商</li><li>优先级和权重管理</li><li>动态调整和优化</li></ul><h3 id="_7-4-安全保护体系" tabindex="-1">7.4 安全保护体系 <a class="header-anchor" href="#_7-4-安全保护体系" aria-label="Permalink to &quot;7.4 安全保护体系&quot;">​</a></h3><ul><li>多层次故障检测</li><li>温度、电压、电流保护</li><li>软件硬件双重保护</li></ul><h2 id="八、总结" tabindex="-1">八、总结 <a class="header-anchor" href="#八、总结" aria-label="Permalink to &quot;八、总结&quot;">​</a></h2><p>华为充电管理系统是一个高度复杂、模块化、事件驱动的电源管理架构，具有以下核心优势：</p><ol><li>分层架构：清晰的层次划分，便于理解和维护</li><li>模块化设计：功能模块独立，支持灵活扩展</li><li>事件驱动：异步处理，响应迅速</li><li>投票决策：多客户端协商，优化参数配置</li><li>安全可靠：多层次保护，确保充电安全</li></ol>`,51)])])}const o=a(t,[["render",e]]);export{g as __pageData,o as default};
