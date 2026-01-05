@@ -236,5 +236,5 @@ static void bat_fault_cutoff_vol_event_handle(struct bat_fault_device *di)
 ```
 
 ## 流程图
-![](../images/UML_battery_core.svg)
-高清大图：[流程图高清](../images/UML_battery_core.svg)
+![](./images/UML_battery_core.svg)
+高清大图：[流程图高清](./images/UML_battery_core.svg)
