@@ -126,7 +126,7 @@ export default defineConfig({
       */
       {
         text: '华为充电管理架构',
-        collapsed: true,  // 默认折叠
+        collapsed: false,  // 默认折叠
         items: [
           { text: '系统架构概览', link: '/hw_charging/overview' },
           {
@@ -157,7 +157,7 @@ export default defineConfig({
                 text: '电池核心 (battery_core)',
                 collapsed: true,
                 items: [
-                  { text: '电池状态监控', link: '/hw_charging/battery-core/overview#定期刷新机制（核心循环）' },
+                  { text: '电池状态监控', link: '/hw_charging/battery-core/overview#定期刷新机制' },
                   { text: '温度补偿与 NTC 校准', link: '/hw_charging/battery-core/overview#温度的判定' },
                   { text: '流程图', link: '/hw_charging/battery-core/overview#流程图' },
                 ]
