@@ -22,6 +22,7 @@
   "dependencies": {
     "markdown-it-custom-attrs": "^1.0.2",
     "markdown-it-plantuml": "^1.4.1",
+    "viewerjs": "^1.11.7",
     "vitepress-plugin-image-viewer": "^1.1.6"
   }
 }
