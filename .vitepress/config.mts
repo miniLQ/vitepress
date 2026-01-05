@@ -1,5 +1,5 @@
-import { defineConfig } from 'vitepress'
-
+import { defineConfig } from 'vitepress';
+import plantuml from 'markdown-it-plantuml';
 import { withMermaid } from 'vitepress-plugin-mermaid';
 
 // https://vitepress.dev/reference/site-config
@@ -7,6 +7,14 @@ export default defineConfig({
   title: "林渡的内核笔记",
   description: "A VitePress Site",
   //ignoreDeadLinks: true,
+    markdown: {
+    config: (md) => {
+      // Use the PlantUML plugin
+      md.use(plantuml);
+      // Or if using the newer version:
+      // md.use(plantuml);
+    }
+  },
   themeConfig: {
     // https://vitepress.dev/reference/default-theme-config
     nav: [
@@ -147,10 +155,9 @@ export default defineConfig({
                 text: '电池核心 (battery_core)',
                 collapsed: true,
                 items: [
-                  { text: '电池状态监控', link: '/hw_charging/business/battery-core/status-monitor' },
-                  { text: '温度补偿与 NTC 校准', link: '/hw_charging/business/battery-core/temp-calibration' },
-                  { text: '容量等级管理', link: '/hw_charging/business/battery-core/capacity-management' },
-                  { text: '多电池系统支持', link: '/hw_charging/business/battery-core/multi-battery' }
+                  { text: '电池状态监控', link: '/hw_charging/battery-core/overview#定期刷新机制（核心循环）' },
+                  { text: '温度补偿与 NTC 校准', link: '/hw_charging/battery-core/overview#温度的判定' },
+                  { text: '流程图', link: '/hw_charging/battery-core/overview#流程图' },
                 ]
               },
               {
