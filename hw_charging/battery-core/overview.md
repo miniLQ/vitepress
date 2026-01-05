@@ -237,4 +237,9 @@ static void bat_fault_cutoff_vol_event_handle(struct bat_fault_device *di)
 
 ## 流程图
 ![](./images/UML_battery_core.svg)
-高清大图：[流程图高清](./images/UML_battery_core.svg)
+<script setup>
+import umlUrl from './images/UML_battery_core.svg?url'
+</script>
+
+<img :src="umlUrl" alt="UML battery core" />
+高清大图：<a :href="umlUrl" target="_blank" rel="noreferrer">流程图高清</a>
