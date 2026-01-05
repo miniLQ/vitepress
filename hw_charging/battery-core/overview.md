@@ -106,7 +106,7 @@ struct bat_core_device {
 ```
 驱动核心对象是 struct bat_core_device *di（全局 `g_bat_core_dev` 也会保存一份）。
 
-## 定期刷新机制（核心循环）
+## 定期刷新机制
 
 ```c
 
@@ -236,80 +236,5 @@ static void bat_fault_cutoff_vol_event_handle(struct bat_fault_device *di)
 ```
 
 ## 流程图
-```plantuml
-@startuml
-title battery_core monitor_work 刷新流程（Activity Diagram）
-skinparam activity {
-  BackgroundColor #FFFFFF
-  BorderColor #333333
-}
-start
-
-:monitor_work 触发 (delayed_work);
-:__pm_wakeup_event(wakelock);
-:mutex_lock(data_lock);
-
-:exist = coul_interface_is_battery_exist(coul_type);
-
-if (exist == 1?) then (yes)
-  :读取温度源;
-  if (temp_type == MIXED?) then (yes)
-    :temp_raw = bat_temp_get_temperature(MIXED);
-  else (no)
-    :temp_raw = coul_get_temperature();
-    :ichg = coul_get_current();
-  endif
-
-  if (ntc_compensation_is == 1?) then (yes)
-    :temp_now = ntc_compensation(temp_raw, ichg);
-  else (no)
-    :temp_now = temp_raw;
-  endif
-
-  :ui_capacity = coul_get_capacity();
-  :rm = coul_get_rm();
-  :fcc = coul_get_fcc();
-  :cycle = coul_get_cycle_count();
-  :vbat_now = coul_get_voltage_now();
-  :voltage_max_now 保持/或按策略更新;
-
-  if (bat_fault_is_cutoff_vol()?) then (yes)
-    :health = UNDERVOLTAGE;
-    :bat_fault_send_under_voltage_event();
-  else (no)
-    if (temp_now < COLD_TH?) then (cold)
-      :health = COLD;
-    elseif (temp_now > OVERHEAT_TH?) then (hot)
-      :health = OVERHEAT;
-    else (ok)
-      :health = GOOD;
-    endif
-  endif
-
-  :更新 di->data 缓存\n(exist/status/health/cap/temp/fcc/rm/...);
-
-else (no)
-  :di->data.exist = 0;
-  :di->data.health/status = UNKNOWN;
-endif
-
-:mutex_unlock(data_lock);
-
-if (health == UNKNOWN?) then (abnormal)
-  :work_interval = ABNORMAL_INTERVAL;
-else (normal)
-  :根据 ui_capacity 匹配 work_para 表\n得到 work_interval;
-endif
-
-:queue_delayed_work(work_interval);
-
-if (需要立即通知上层?) then (yes)
-  :power_supply_sync_changed("battery"/"Battery");
-endif
-
-stop
-@enduml
-
-```
-
 ![](../images/UML_battery_core.svg)
+高清大图：[流程图高清](../images/UML_battery_core.svg)

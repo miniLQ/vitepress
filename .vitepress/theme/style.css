@@ -1,0 +1,25 @@
+/* 让放大图层始终在最上面（防止被导航/弹窗盖住） */
+.medium-zoom-overlay,
+.medium-zoom-image--opened {
+  z-index: 9999 !important;
+}
+
+/* 放大后的图片更像“浮层卡片”，不糊、不怪异 */
+.medium-zoom-image--opened {
+  border-radius: 12px;
+  box-shadow: 0 20px 80px rgba(0, 0, 0, 0.35);
+}
+
+/* 深浅色背景更舒服（覆盖你主题可能的背景色） */
+.medium-zoom-overlay {
+  background: rgba(0, 0, 0, 0.72) !important;
+}
+.dark .medium-zoom-overlay {
+  background: rgba(0, 0, 0, 0.78) !important;
+}
+
+/* 防止正文里的图片被主题加了奇怪的 filter/transform 导致放大异常 */
+.vp-doc img {
+  transform: none;
+  filter: none;
+}
