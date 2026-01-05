@@ -1,5 +1,6 @@
 import { defineConfig } from 'vitepress';
 import plantuml from 'markdown-it-plantuml';
+import { imageViewerPlugin } from 'vitepress-plugin-image-viewer';
 import { withMermaid } from 'vitepress-plugin-mermaid';
 
 // https://vitepress.dev/reference/site-config
@@ -7,13 +8,19 @@ export default defineConfig({
   title: "林渡的内核笔记",
   description: "A VitePress Site",
   //ignoreDeadLinks: true,
-    markdown: {
+  markdown: {
     config: (md) => {
       // Use the PlantUML plugin
       md.use(plantuml);
       // Or if using the newer version:
       // md.use(plantuml);
     }
+  },
+    // 在 vite 配置的 plugins 选项中启用插件
+  vite: {
+    plugins: [
+      imageViewerPlugin()
+    ]
   },
   themeConfig: {
     // https://vitepress.dev/reference/default-theme-config
