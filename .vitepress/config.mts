@@ -142,7 +142,13 @@ export default withMermaid (defineConfig({
             items: [
               { text: 'sysfs 文件系统', link: '/hw_charging/user-interface/sysfs' },
               { text: 'uevent 事件机制', link: '/hw_charging/user-interface/uevent' },
-              { text: 'power_supply 子系统', link: '/hw_charging/user-interface/power-supply' },
+              { 
+                text: 'power_supply 子系统',
+                collapsed: true,
+                items: [
+                  { text: 'battery聚合', link: '/hw_charging/battery-core/huawei_mixed_battery' },
+                ]
+              },
               { text: 'Android HAL 接口', link: '/hw_charging/user-interface/android-hal' }
             ]
           },
@@ -154,17 +160,19 @@ export default withMermaid (defineConfig({
                 text: '充电管理器 (charge_manager)',
                 collapsed: true,
                 items: [
-                  { text: '充电模式选择', link: '/hw_charging/business/charge-manager/mode-selection' },
-                  { text: '充电状态机', link: '/hw_charging/business/charge-manager/state-machine' },
-                  { text: '协议协商', link: '/hw_charging/business/charge-manager/protocol-negotiation' },
-                  { text: '故障处理', link: '/hw_charging/business/charge-manager/fault-handling' }
+                  { text: '充电管理器概览', link: '/hw_charging/business/charger-manager/overview' },
+                  { text: '充电模式选择', link: '/hw_charging/business/charger-manager/mode-selection' },
+                  { text: '充电状态机', link: '/hw_charging/business/charger-manager/state-machine' },
+                  { text: '协议协商', link: '/hw_charging/business/charger-manager/protocol-negotiation' },
+                  { text: '故障处理', link: '/hw_charging/business/charger-manager/fault-handling' },
+                  { text: '充电模式自动化测试', link: '/hw_charging/business/charger-manager/charge_test'}
                 ]
               },
               { 
                 text: '电池核心 (battery_core)',
                 collapsed: true,
                 items: [
-                  { text: 'battery_core概览', link: '/hw_charging/battery-core/overview' },
+                  { text: 'battery_core概览', link: '/hw_charging/business/battery-core/overview' },
 
                 ]
               },
@@ -172,25 +180,25 @@ export default withMermaid (defineConfig({
                 text: '充电模式实现',
                 collapsed: true,
                 items: [
-                  { text: 'Buck 充电模式', link: '/hw_charging/business/charge-modes/buck-charge' },
-                  { text: '直充模式 (SCP/LVC)', link: '/hw_charging/business/charge-modes/direct-charge' },
-                  { text: 'HVDCP 快充', link: '/hw_charging/business/charge-modes/hvdcp' },
-                  { text: '无线充电', link: '/hw_charging/business/charge-modes/wireless' }
+                  { text: 'Buck 充电模式', link: '/hw_charging/business/charger-manager/buck_charge' },
+                  { text: '直充模式 (SCP/LVC)', link: '/hw_charging/business/charger-manager/direct_charge' },
+                  { text: 'HVDCP 快充', link: '/hw_charging/business/charger-manager/hvdcp_charge' },
+                  { text: '无线充电', link: '/hw_charging/business/charger-manager/wireless' }
                 ]
               },
               {
                 text: '电池管理子模块',
                 collapsed: true,
                 items: [
-                  { text: '1S2P 电池拓扑', link: '/hw_charging/battery-core/battery_1s2p' },
-                  { text: 'CC/CV 充电算法', link: '/hw_charging/battery-core/battery_cccv' },
-                  { text: '电荷平衡管理', link: '/hw_charging/battery-core/battery_charge_balance' },
-                  { text: '电池模型与参数', link: '/hw_charging/battery-core/battery_model' },
-                  { text: '电池健康度 (SOH)', link: '/hw_charging/battery-core/battery_soh' },
-                  { text: 'UI 电量显示', link: '/hw_charging/battery-core/battery_ui_capacity' },
-                  { text: '电池故障检测', link: '/hw_charging/battery-core/battery_fault' },
-                  { text: '电池开路电压管理', link: '/hw_charging/battery-core/battery_ocv' },
-                  { text: '电池温度管理', link: '/hw_charging/battery-core/battery_temp' },
+                  { text: '1S2P 电池拓扑', link: '/hw_charging/business/battery-core/battery_1s2p' },
+                  { text: 'CC/CV 充电算法', link: '/hw_charging/business/battery-core/battery_cccv' },
+                  { text: '电荷平衡管理', link: '/hw_charging/business/battery-core/battery_charge_balance' },
+                  { text: '电池模型与参数', link: '/hw_charging/business/battery-core/battery_model' },
+                  { text: '电池健康度 (SOH)', link: '/hw_charging/business/battery-core/battery_soh' },
+                  { text: 'UI 电量显示', link: '/hw_charging/business/battery-core/battery_ui_capacity' },
+                  { text: '电池故障检测', link: '/hw_charging/business/battery-core/battery_fault' },
+                  { text: '电池开路电压管理', link: '/hw_charging/business/battery-core/battery_ocv' },
+                  { text: '电池温度管理', link: '/hw_charging/business/battery-core/battery_temp' },
                 ]
               }
             ]
