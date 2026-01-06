@@ -1,20 +1,27 @@
 import { defineConfig } from 'vitepress';
-import plantuml from 'markdown-it-plantuml';
+import markdownItPlantuml from 'markdown-it-plantuml'
+import { withMermaid } from "vitepress-plugin-mermaid";
 
-import { withMermaid } from 'vitepress-plugin-mermaid';
+
 
 // https://vitepress.dev/reference/site-config
-export default defineConfig({
+export default withMermaid (defineConfig({
   title: "林渡的内核笔记",
   description: "A VitePress Site",
   //ignoreDeadLinks: true,
   markdown: {
     config: (md) => {
-      // Use the PlantUML plugin
-      md.use(plantuml);
-      // Or if using the newer version:
-      // md.use(plantuml);
-    }
+      md.use(markdownItPlantuml, {
+        openMarker: '```plantuml',
+        closeMarker: '```',
+        server: 'https://www.plantuml.com/plantuml'
+      })
+    },
+    
+  },
+
+  mermaid: {
+      theme: 'default' // 可选：'default'， 'forest', 'dark', 'neutral'
   },
 
   themeConfig: {
@@ -157,8 +164,8 @@ export default defineConfig({
                 text: '电池核心 (battery_core)',
                 collapsed: true,
                 items: [
-                  { text: '电池状态监控', link: '/hw_charging/battery-core/overview#定期刷新机制' },
-                  { text: '温度补偿与 NTC 校准', link: '/hw_charging/battery-core/overview#温度的判定' },
+                  { text: 'battery-core概览', link: '/hw_charging/battery-core/overview' },
+                  { text: 'battery-model模块', link: '/hw_charging/battery-core/battery_model' },
                   { text: '流程图', link: '/hw_charging/battery-core/overview#流程图' },
                 ]
               },
@@ -319,4 +326,4 @@ export default defineConfig({
     ]
   }
 })
-
+)
