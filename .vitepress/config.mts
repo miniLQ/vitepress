@@ -163,6 +163,22 @@ export default withMermaid (defineConfig({
                   { text: '充电模式自动化测试', link: '/hw_charging/business/charger-manager/charge_test'}
                 ]
               },
+            ]
+          },
+          {
+            text: '3️⃣ 基础服务层',
+            collapsed: true,
+            items: [
+                  { text: 'Power Event 事件通知机制', link: '/hw_charging/common-module/power_event' },
+                  { text: 'Power Vote 投票决策机制', link: '/hw_charging/common-module/power_vote' },
+                  { text: 'Power DSM 设备状态监控', link: '/hw_charging/common-module/power_dsm' },
+                  { text: 'Power Log 日志模块', link: '/hw_charging/common-module/power_log' }
+            ]
+          },
+          {
+            text: '4️⃣ 电池管理层',
+            collapsed: true,
+            items: [
               { 
                 text: 'battery_core',
                 collapsed: true,
@@ -199,17 +215,7 @@ export default withMermaid (defineConfig({
             ]
           },
           {
-            text: '3️⃣ 基础设施层',
-            collapsed: true,
-            items: [
-                  { text: 'Power Event 事件通知机制', link: '/hw_charging/common-module/power_event' },
-                  { text: 'Power Vote 投票决策机制', link: '/hw_charging/common-module/power_vote' },
-                  { text: 'Power DSM 设备状态监控', link: '/hw_charging/common-module/power_dsm' },
-                  { text: 'Power Log 日志模块', link: '/hw_charging/common-module/power_log' }
-            ]
-          },
-          {
-            text: '4️⃣ 协议抽象与算法层',
+            text: '5️⃣ 协议抽象与算法层',
             collapsed: true,
             items: [
               {
@@ -243,7 +249,7 @@ export default withMermaid (defineConfig({
             ]
           },
           {
-            text: '5️⃣ 硬件抽象与驱动层',
+            text: '6️⃣ 硬件抽象与驱动层',
             collapsed: true,
             items: [
               { 
@@ -284,6 +290,13 @@ export default withMermaid (defineConfig({
                   { text: '温度补偿算法', link: '/hw_charging/hardware/temp-sensor/compensation' }
                 ]
               }
+            ]
+          },
+          {
+            text: '7️⃣ 监控和保护层',
+            collapsed: true,
+            items: [
+              { text: '硬件监控模块', link: '/hw_charging/monitoring/hardware-monitor' },
             ]
           },
           /*
