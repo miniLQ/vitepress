@@ -28,7 +28,7 @@ export default withMermaid (defineConfig({
     // https://vitepress.dev/reference/default-theme-config
     nav: [
       { text: 'Home', link: '/' },
-      { text: 'start', link: '/getting-started' }
+      { text: '作者主页', link: 'https://www.iliuqi.com/authors/iliuqi' }
     ],
 
     sidebar: [
@@ -209,27 +209,35 @@ export default withMermaid (defineConfig({
             ]
           },
           {
-            text: '4️⃣ 协议与算法层',
+            text: '4️⃣ 协议抽象与算法层',
             collapsed: true,
             items: [
               {
                 text: '充电协议',
                 collapsed: true,
                 items: [
-                  { text: 'USB PD 协议', link: '/hw_charging/protocol/protocols/usb-pd' },
-                  { text: 'SCP 超级快充', link: '/hw_charging/protocol/protocols/scp' },
-                  { text: 'FCP 快充协议', link: '/hw_charging/protocol/protocols/fcp' },
-                  { text: 'UFCS 融合快充', link: '/hw_charging/protocol/protocols/ufcs' },
-                  { text: 'Qi 无线充电协议', link: '/hw_charging/protocol/protocols/qi' }
+                  { text: '协议抽象层', link: '/hw_charging/protocols/adapter_protocol' },
+                  { text: 'USB PD 协议', link: '/hw_charging/protocols/adapter_protocol_pd' },
+                  { text: 'SCP 超级快充', link: '/hw_charging/protocols/adapter_protocol_scp' },
+                  { text: 'FCP 快充协议', link: '/hw_charging/protocols/adapter_protocol_fcp' },
+                  { text: 'UFCS 融合快充', link: '/hw_charging/protocols/adapter_protocol_ufcs' },
+                  { text: 'UVDM 私有快充协议', link: '/hw_charging/protocols/adapter_protocol_uvdm' },
+                  { text: 'Qi 无线充电协议', link: '/hw_charging/protocols/adapter_protocol_qi' }
                 ]
               },
               {
                 text: '算法库',
                 collapsed: true,
                 items: [
-                  { text: 'SOC 估算算法', link: '/hw_charging/protocol/algorithms/soc-estimation' },
+                  { text: '算法库概览', link: '/hw_charging/common-module/power_algorithm' },
+                  { text: '迟滞控制算法', link: '/hw_charging/common-module/power_algorithm#_4-1-通用迟滞算法' },
+                  { text: '补偿算法', link: '/hw_charging/common-module/power_algorithm#_4-2-通用补偿算法' },
+                  { text: '平滑补偿算法', link: '/hw_charging/common-module/power_algorithm#_4-3-平滑补偿算法' },
+                  { text: 'ADC地线补偿算法', link: '/hw_charging/common-module/power_algorithm#_4-4-adc地线补偿算法' },
+                  { text: '线性插值查表算法', link: '/hw_charging/common-module/power_algorithm#_4-5-线性插值查表算法' },
+                  /*{ text: 'SOC 估算算法', link: '/hw_charging/protocol/algorithms/soc-estimation' },
                   { text: '充电曲线优化', link: '/hw_charging/protocol/algorithms/charge-curve' },
-                  { text: '温度预测算法', link: '/hw_charging/protocol/algorithms/temp-prediction' }
+                  { text: '温度预测算法', link: '/hw_charging/protocol/algorithms/temp-prediction' }*/
                 ]
               }
             ]
@@ -278,6 +286,7 @@ export default withMermaid (defineConfig({
               }
             ]
           },
+          /*
           {
             text: '6️⃣ 安全与保护机制',
             collapsed: true,
@@ -310,13 +319,13 @@ export default withMermaid (defineConfig({
               { text: '常见问题排查', link: '/hw_charging/debug/troubleshooting' },
               { text: '性能优化建议', link: '/hw_charging/debug/performance-tuning' }
             ]
-          }
+          }*/
         ]
       }
     ],
 
     socialLinks: [
-      { icon: 'github', link: 'https://github.com/vuejs/vitepress' }
+      { icon: 'github', link: 'https://github.com/miniLQ' }
     ]
   }
 })
