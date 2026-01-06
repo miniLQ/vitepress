@@ -140,16 +140,15 @@ export default withMermaid (defineConfig({
             text: '1️⃣ 用户空间接口层',
             collapsed: true,
             items: [
-              { text: 'sysfs 文件系统', link: '/hw_charging/user-interface/sysfs' },
-              { text: 'uevent 事件机制', link: '/hw_charging/user-interface/uevent' },
+              { text: 'sysfs 文件系统', link: '/hw_charging/common-module/power_sysfs' },
               { 
                 text: 'power_supply 子系统',
                 collapsed: true,
                 items: [
                   { text: 'battery聚合', link: '/hw_charging/battery-core/huawei_mixed_battery' },
+                  { text: 'Power Supply 接口', link: '/hw_charging/common-module/power_supply' }
                 ]
               },
-              { text: 'Android HAL 接口', link: '/hw_charging/user-interface/android-hal' }
             ]
           },
           {
@@ -157,19 +156,15 @@ export default withMermaid (defineConfig({
             collapsed: true,
             items: [
               { 
-                text: '充电管理器 (charge_manager)',
+                text: 'charge_manager',
                 collapsed: true,
                 items: [
                   { text: '充电管理器概览', link: '/hw_charging/business/charger-manager/overview' },
-                  { text: '充电模式选择', link: '/hw_charging/business/charger-manager/mode-selection' },
-                  { text: '充电状态机', link: '/hw_charging/business/charger-manager/state-machine' },
-                  { text: '协议协商', link: '/hw_charging/business/charger-manager/protocol-negotiation' },
-                  { text: '故障处理', link: '/hw_charging/business/charger-manager/fault-handling' },
                   { text: '充电模式自动化测试', link: '/hw_charging/business/charger-manager/charge_test'}
                 ]
               },
               { 
-                text: '电池核心 (battery_core)',
+                text: 'battery_core',
                 collapsed: true,
                 items: [
                   { text: 'battery_core概览', link: '/hw_charging/business/battery-core/overview' },
@@ -177,7 +172,7 @@ export default withMermaid (defineConfig({
                 ]
               },
               {
-                text: '充电模式实现',
+                text: '充电模式子模块',
                 collapsed: true,
                 items: [
                   { text: 'Buck 充电模式', link: '/hw_charging/business/charger-manager/buck_charge' },
@@ -204,30 +199,19 @@ export default withMermaid (defineConfig({
             ]
           },
           {
-            text: '3️⃣ 协议与算法层',
+            text: '3️⃣ 基础设施层',
             collapsed: true,
             items: [
-              { 
-                text: '事件系统 (power_event)',
-                collapsed: true,
-                items: [
-                  { text: '事件驱动框架', link: '/hw_charging/protocol/event-system/framework' },
-                  { text: '连接事件 (USB/Wireless/OTG)', link: '/hw_charging/protocol/event-system/connect-events' },
-                  { text: '充电事件 (Start/Stop/Done)', link: '/hw_charging/protocol/event-system/charge-events' },
-                  { text: '故障事件 (OVP/OCP/OTP)', link: '/hw_charging/protocol/event-system/fault-events' },
-                  { text: 'Notifier 机制', link: '/hw_charging/protocol/event-system/notifier' }
-                ]
-              },
-              { 
-                text: '投票系统 (power_vote)',
-                collapsed: true,
-                items: [
-                  { text: '投票决策机制', link: '/hw_charging/protocol/vote-system/mechanism' },
-                  { text: '客户端类型与优先级', link: '/hw_charging/protocol/vote-system/clients' },
-                  { text: 'FCC/ICL 投票', link: '/hw_charging/protocol/vote-system/fcc-icl' },
-                  { text: '温度与电压投票', link: '/hw_charging/protocol/vote-system/temp-voltage' }
-                ]
-              },
+                  { text: 'Power Event 事件通知机制', link: '/hw_charging/common-module/power_event' },
+                  { text: 'Power Vote 投票决策机制', link: '/hw_charging/common-module/power_vote' },
+                  { text: 'Power DSM 设备状态监控', link: '/hw_charging/common-module/power_dsm' },
+                  { text: 'Power Log 日志模块', link: '/hw_charging/common-module/power_log' }
+            ]
+          },
+          {
+            text: '4️⃣ 协议与算法层',
+            collapsed: true,
+            items: [
               {
                 text: '充电协议',
                 collapsed: true,
@@ -251,14 +235,14 @@ export default withMermaid (defineConfig({
             ]
           },
           {
-            text: '4️⃣ 硬件抽象与驱动层',
+            text: '5️⃣ 硬件抽象与驱动层',
             collapsed: true,
             items: [
               { 
                 text: '电量计驱动 (coul)',
                 collapsed: true,
                 items: [
-                  { text: '电量计接口抽象', link: '/hw_charging/hardware/coul/interface' },
+                  { text: '电量计接口抽象', link: '/hw_charging/hardware/coul/overview' },
                   { text: 'RT9426 驱动', link: '/hw_charging/hardware/coul/rt9426' },
                   { text: 'MAX1726x 驱动', link: '/hw_charging/hardware/coul/max1726x' },
                   { text: 'SOC 校准', link: '/hw_charging/hardware/coul/soc-calibration' }
@@ -295,7 +279,7 @@ export default withMermaid (defineConfig({
             ]
           },
           {
-            text: '5️⃣ 安全与保护机制',
+            text: '6️⃣ 安全与保护机制',
             collapsed: true,
             items: [
               { text: '过压保护 (OVP)', link: '/hw_charging/protection/ovp' },
@@ -307,7 +291,7 @@ export default withMermaid (defineConfig({
             ]
           },
           {
-            text: '6️⃣ 工作流程与时序',
+            text: '7️⃣ 工作流程与时序',
             collapsed: true,
             items: [
               { text: '充电启动流程', link: '/hw_charging/workflow/charge-start' },
@@ -318,7 +302,7 @@ export default withMermaid (defineConfig({
             ]
           },
           {
-            text: '7️⃣ 调试与分析',
+            text: '8️⃣ 调试与分析',
             collapsed: true,
             items: [
               { text: 'sysfs 调试接口', link: '/hw_charging/debug/sysfs-debug' },
