@@ -164,9 +164,8 @@ export default withMermaid (defineConfig({
                 text: '电池核心 (battery_core)',
                 collapsed: true,
                 items: [
-                  { text: 'battery-core概览', link: '/hw_charging/battery-core/overview' },
-                  { text: 'battery-model模块', link: '/hw_charging/battery-core/battery_model' },
-                  { text: '流程图', link: '/hw_charging/battery-core/overview#流程图' },
+                  { text: 'battery_core概览', link: '/hw_charging/battery-core/overview' },
+
                 ]
               },
               {
@@ -183,12 +182,15 @@ export default withMermaid (defineConfig({
                 text: '电池管理子模块',
                 collapsed: true,
                 items: [
-                  { text: '1S2P 电池拓扑', link: '/hw_charging/business/battery-modules/1s2p' },
-                  { text: 'CC/CV 充电算法', link: '/hw_charging/business/battery-modules/cccv' },
-                  { text: '电荷平衡管理', link: '/hw_charging/business/battery-modules/charge-balance' },
-                  { text: '电池模型与参数', link: '/hw_charging/business/battery-modules/battery-model' },
-                  { text: '电池健康度 (SOH)', link: '/hw_charging/business/battery-modules/soh' },
-                  { text: 'UI 电量显示', link: '/hw_charging/business/battery-modules/ui-capacity' }
+                  { text: '1S2P 电池拓扑', link: '/hw_charging/battery-core/battery_1s2p' },
+                  { text: 'CC/CV 充电算法', link: '/hw_charging/battery-core/battery_cccv' },
+                  { text: '电荷平衡管理', link: '/hw_charging/battery-core/battery_charge_balance' },
+                  { text: '电池模型与参数', link: '/hw_charging/battery-core/battery_model' },
+                  { text: '电池健康度 (SOH)', link: '/hw_charging/battery-core/battery_soh' },
+                  { text: 'UI 电量显示', link: '/hw_charging/battery-core/battery_ui_capacity' },
+                  { text: '电池故障检测', link: '/hw_charging/battery-core/battery_fault' },
+                  { text: '电池开路电压管理', link: '/hw_charging/battery-core/battery_ocv' },
+                  { text: '电池温度管理', link: '/hw_charging/battery-core/battery_temp' },
                 ]
               }
             ]
