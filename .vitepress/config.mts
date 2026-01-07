@@ -277,9 +277,11 @@ export default withMermaid (defineConfig({
                 text: '硬件通道管理',
                 collapsed: true,
                 items: [
-                  { text: 'VBUS 通道管理', link: '/hw_charging/hardware/channel/vbus' },
-                  { text: '线缆识别与认证', link: '/hw_charging/hardware/channel/cable-auth' },
-                  { text: '无线充电 Tx/Rx', link: '/hw_charging/hardware/channel/wireless-txrx' }
+                  { text: 'VBUS 通道管理', link: '/hw_charging/hardware/channel/vbus_channel' },
+                  { text: '放电升压通道', link: '/hw_charging/hardware/channel/dischg_boost' },
+                  { text: '充电通道管理', link: '/hw_charging/hardware/channel/charger_channel' },
+                  { text: '通用电源开关', link: '/hw_charging/hardware/channel/power_sw' },
+                  { text: '有线充电通道切换', link: '/hw_charging/hardware/channel/wired_channel_switch' }
                 ]
               },
               {
