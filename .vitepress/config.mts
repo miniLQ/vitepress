@@ -6,6 +6,7 @@ import { withMermaid } from "vitepress-plugin-mermaid";
 
 // https://vitepress.dev/reference/site-config
 export default withMermaid (defineConfig({
+  base: process.env.BASE_PATH || '/',
   title: "林渡的内核笔记",
   description: "A VitePress Site",
   //ignoreDeadLinks: true,
