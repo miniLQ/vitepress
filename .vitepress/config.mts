@@ -284,22 +284,27 @@ export default withMermaid (defineConfig({
                   { text: '有线充电通道切换', link: '/hw_charging/hardware/channel/wired_channel_switch' }
                 ]
               },
-              {
-                text: '温度传感器',
-                collapsed: true,
-                items: [
-                  { text: 'NTC 温度采集', link: '/hw_charging/hardware/temp-sensor/ntc' },
-                  { text: '多点温度监控', link: '/hw_charging/hardware/temp-sensor/multi-point' },
-                  { text: '温度补偿算法', link: '/hw_charging/hardware/temp-sensor/compensation' }
-                ]
-              }
             ]
           },
           {
             text: '7️⃣ 监控和保护层',
             collapsed: true,
             items: [
-              { text: '硬件监控模块', link: '/hw_charging/monitoring/hardware-monitor' },
+              { text: 'ACR异常监控模块', link: '/hw_charging/hardware/monitor/acr_detect' },
+              { text: '低温电池加热控制', link: '/hw_charging/hardware/monitor/bat_heating' },
+              { text: 'btb连接器异常检测', link: '/hw_charging/hardware/monitor/btb_detect' },
+              { text: '快充满电控制', link: '/hw_charging/hardware/monitor/ffc_control' },
+              { text: 'LGA 主板异常检测', link: '/hw_charging/hardware/monitor/lga_check' },
+              { text: '极低电量应急供电', link: '/hw_charging/hardware/monitor/low_power' },
+              { text: 'ship mode 模式', link: '/hw_charging/hardware/monitor/ship_mode' },
+              { text: 'SMPL瞬时掉电异常监控', link: '/hw_charging/hardware/monitor/smpl' },
+              { text: '电池电量控制模块', link: '/hw_charging/hardware/monitor/soc_control' },
+              { text: '高精度电量显示', link: '/hw_charging/hardware/monitor/soc_decimal' },
+              { text: '温度监控与保护', link: '/hw_charging/hardware/monitor/temp_control' },
+              { text: 'USB短路保护', link: '/hw_charging/hardware/monitor/uscp' },
+              { text: 'VBUS监控与保护', link: '/hw_charging/hardware/monitor/vbus_monitor' },
+              { text: '进水GPIO检测', link: '/hw_charging/hardware/monitor/water_check' },
+              { text: '进水检测框架', link: '/hw_charging/hardware/monitor/water_detect' }
             ]
           },
           /*
