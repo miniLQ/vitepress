@@ -202,6 +202,7 @@ export default withMermaid (defineConfig({
                 text: '电池管理子模块',
                 collapsed: true,
                 items: [
+                  { text: '电池类型识别', link: '/hw_charging/business/battery-core/battery_type_identify' },
                   { text: '1S2P 电池拓扑', link: '/hw_charging/business/battery-core/battery_1s2p' },
                   { text: 'CC/CV 充电算法', link: '/hw_charging/business/battery-core/battery_cccv' },
                   { text: '电荷平衡管理', link: '/hw_charging/business/battery-core/battery_charge_balance' },
